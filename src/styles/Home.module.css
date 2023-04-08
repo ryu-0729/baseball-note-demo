@@ -1,10 +1,15 @@
 .main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6rem;
+  padding: 10px;
   min-height: 100vh;
+}
+
+.headerContents {
+  display: flex;
+  justify-content: end;
+}
+
+.headerContents button {
+  margin: 10px;
 }
 
 .description {
