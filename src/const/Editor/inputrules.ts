@@ -65,13 +65,5 @@ export function buildInputRules(schema: Schema) {
     type = schema.nodes.bullet_list;
     rules.push(bulletListRule(type));
   }
-  if (schema.nodes.code_block) {
-    type = schema.nodes.code_block;
-    rules.push(codeBlockRule(type));
-  }
-  if (schema.nodes.heading) {
-    type = schema.nodes.heading;
-    rules.push(headingRule(type, 6));
-  }
   return inputRules({ rules });
 }

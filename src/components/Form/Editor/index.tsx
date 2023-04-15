@@ -8,24 +8,33 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { menuBar } from 'prosemirror-menu';
 import { history } from 'prosemirror-history';
+import { defaultMarkdownSerializer } from 'prosemirror-markdown';
 import 'prosemirror-menu/style/menu.css';
+import 'prosemirror-view/style/prosemirror.css';
 // eslint-disable-next-line import/no-named-as-default
 import schema from '@/const/Editor/schema';
 import { buildInputRules } from '@/const/Editor/inputrules';
 import { buildMenuItems } from '@/const/Editor/menu';
+import { buildKeymap } from '@/const/Editor/keymap';
+import { parser } from '@/const/Editor/parser';
 import style from './index.module.css';
 
 type Props = {
-  setEditorValue: Dispatch<SetStateAction<EditorState | undefined>>
+  editorValue: string
+  setEditorValue: Dispatch<SetStateAction<string>>
 };
 
-const Editor: FC<Props> = ({ setEditorValue }) => {
+const Editor: FC<Props> = ({
+  editorValue,
+  setEditorValue,
+}) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const editorState = EditorState.create({
-      schema,
+      doc: parser.parse(editorValue) ?? undefined,
       plugins: [
+        keymap(buildKeymap(schema)),
         keymap(baseKeymap),
         buildInputRules(schema),
         menuBar({
@@ -40,12 +49,14 @@ const Editor: FC<Props> = ({ setEditorValue }) => {
       dispatchTransaction(tr) {
         const newState = view.state.apply(tr);
         view.updateState(newState);
-        setEditorValue(newState);
       },
     });
 
+    setEditorValue(defaultMarkdownSerializer.serialize(view.state.doc));
+
+    view.focus();
     return () => { view.destroy(); };
-  }, [setEditorValue]);
+  }, [editorValue, setEditorValue]);
 
   return (
     <div ref={contentRef} className={style.editor} />

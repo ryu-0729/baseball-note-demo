@@ -1,11 +1,9 @@
 import { useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { EditorState } from 'prosemirror-state';
 import Editor from '@/components/Form/Editor';
 import style from '@/styles/Home.module.css';
 
 const Home = () => {
-  const [/* editorValue */, setEditorValue] = useState<EditorState>();
+  const [editorValue, setEditorValue] = useState<string>('');
 
   return (
     <div className={style.main}>
@@ -21,11 +19,11 @@ const Home = () => {
       </div>
       <div>
         <h3>〜今日の学び〜</h3>
-        <Editor setEditorValue={setEditorValue} />
+        <Editor editorValue={editorValue} setEditorValue={setEditorValue} />
       </div>
       <div>
         <h3>〜1日を振り返って〜</h3>
-        <Editor setEditorValue={setEditorValue} />
+        <Editor editorValue={editorValue} setEditorValue={setEditorValue} />
       </div>
     </div>
   );
