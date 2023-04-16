@@ -12,6 +12,11 @@
 
 .headerContents button {
   margin: 10px;
+  background-color: #fff;
+  border: 1px solid #08131A24;
+  border-radius: 4px;
+  width: 100px;
+  height: 30px;
 }
 
 .description {
