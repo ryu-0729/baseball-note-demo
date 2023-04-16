@@ -42,7 +42,7 @@ const Home = () => {
           <button type="button">公開</button>
         </div>
       </header>
-      <div>
+      <div className={style.condition}>
         <h3>〜調子〜</h3>
         <Condition />
       </div>
