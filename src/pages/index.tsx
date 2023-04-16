@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import Editor from '@/components/Form/Editor';
+import Condition from '@/components/Form/Condition';
 import style from '@/styles/Home.module.css';
 
 type EditorValueType = {
@@ -43,7 +44,7 @@ const Home = () => {
       </header>
       <div>
         <h3>〜調子〜</h3>
-        <div>アイコン選択</div>
+        <Condition />
       </div>
       <div>
         <h3>〜今日の学び〜</h3>

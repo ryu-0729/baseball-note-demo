@@ -1,0 +1,27 @@
+.button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* TODO: ボタンの色は仮置き */
+
+.button .veryPoor {
+  fill: #6633CC;
+}
+
+.button .poor {
+  fill: #6699CC;
+}
+
+.button .normal {
+  fill: #FFCC00;
+}
+
+.button .goodCondition {
+  fill: #FF3333;
+}
+
+.button .veryGoodCondition {
+  fill: #FF33FF;
+}
