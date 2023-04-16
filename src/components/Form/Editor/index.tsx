@@ -1,7 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import {
-  Dispatch, FC, SetStateAction, useEffect, useRef,
-} from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { keymap } from 'prosemirror-keymap';
@@ -21,7 +19,7 @@ import style from './index.module.css';
 
 type Props = {
   editorValue: string
-  setEditorValue: Dispatch<SetStateAction<string>>
+  setEditorValue: (value: string) => void
 };
 
 const Editor: FC<Props> = ({
@@ -49,14 +47,15 @@ const Editor: FC<Props> = ({
       dispatchTransaction(tr) {
         const newState = view.state.apply(tr);
         view.updateState(newState);
+        setEditorValue(defaultMarkdownSerializer.serialize(newState.doc));
       },
     });
 
-    setEditorValue(defaultMarkdownSerializer.serialize(view.state.doc));
-
     view.focus();
     return () => { view.destroy(); };
-  }, [editorValue, setEditorValue]);
+    // NOTE: 第2引数を指定した場合にstylesheet関連でエラーが出るため値は渡さない
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div ref={contentRef} className={style.editor} />
