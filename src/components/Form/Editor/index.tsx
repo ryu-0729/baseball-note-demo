@@ -20,27 +20,30 @@ import style from './index.module.css';
 type Props = {
   editorValue: string
   setEditorValue: (value: string) => void
+  isEdit: boolean
 };
 
 const Editor: FC<Props> = ({
   editorValue,
   setEditorValue,
+  isEdit,
 }) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const editorState = EditorState.create({
       doc: parser.parse(editorValue) ?? undefined,
-      plugins: [
-        keymap(buildKeymap(schema)),
-        keymap(baseKeymap),
-        buildInputRules(schema),
-        menuBar({
-          content: buildMenuItems(schema).fullMenu,
-          floating: true,
-        }),
-        history(),
-      ],
+      plugins: isEdit
+        ? [
+          keymap(buildKeymap(schema)),
+          keymap(baseKeymap),
+          buildInputRules(schema),
+          menuBar({
+            content: buildMenuItems(schema).fullMenu,
+            floating: true,
+          }),
+          history(),
+        ] : undefined,
     });
     const view = new EditorView(contentRef.current, {
       state: editorState,
@@ -49,13 +52,14 @@ const Editor: FC<Props> = ({
         view.updateState(newState);
         setEditorValue(defaultMarkdownSerializer.serialize(newState.doc));
       },
+      editable: () => isEdit,
     });
 
     view.focus();
     return () => { view.destroy(); };
-    // NOTE: 第2引数を指定した場合にstylesheet関連でエラーが出るため値は渡さない
+    // NOTE: 第2引数を指定した場合にstylesheet関連でエラーが出るためeditorValueは含めない
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isEdit]);
 
   return (
     <div ref={contentRef} className={style.editor} />

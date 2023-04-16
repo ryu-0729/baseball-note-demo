@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import Editor from '@/components/Form/Editor';
 import style from '@/styles/Home.module.css';
 
@@ -14,6 +14,7 @@ const initEditorValue: EditorValueType = {
 
 const Home = () => {
   const [editorValue, setEditorValue] = useState<EditorValueType>(initEditorValue);
+  const [isEdit, setIsEdit] = useState<boolean>(true);
 
   const setTodayLearningHandler = useCallback((value: string) => {
     setEditorValue((prev) => ({ ...prev, todayLearning: value }));
@@ -23,11 +24,20 @@ const Home = () => {
     setEditorValue((prev) => ({ ...prev, reflection: value }));
   }, []);
 
+  const onClickPreviewButtonHandler = useCallback(() => { setIsEdit((prev) => !prev); }, []);
+
+  const previewButtonName = useMemo(() => (isEdit ? 'プレビュー' : '編集'), [isEdit]);
+
   return (
     <div className={style.main}>
       <header>
         <div className={style.headerContents}>
-          <button type="button">下書き</button>
+          <button
+            type="button"
+            onClick={onClickPreviewButtonHandler}
+          >
+            {previewButtonName}
+          </button>
           <button type="button">公開</button>
         </div>
       </header>
@@ -40,6 +50,7 @@ const Home = () => {
         <Editor
           editorValue={editorValue.todayLearning}
           setEditorValue={setTodayLearningHandler}
+          isEdit={isEdit}
         />
       </div>
       <div>
@@ -47,6 +58,7 @@ const Home = () => {
         <Editor
           editorValue={editorValue.reflection}
           setEditorValue={setReflectionHandler}
+          isEdit={isEdit}
         />
       </div>
     </div>
