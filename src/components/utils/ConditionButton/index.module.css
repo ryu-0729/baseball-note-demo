@@ -1,7 +1,12 @@
 .button {
-  border: none;
-  background: transparent;
+  border: 1px solid #08131A24;
+  border-radius: 4px;
+  background-color: #fff;
   cursor: pointer;
+}
+
+.activeColor {
+  border: 1px solid #ff7f50;
 }
 
 /* TODO: ボタンの色は仮置き */

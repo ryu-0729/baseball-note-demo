@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import Editor from '@/components/Form/Editor';
 import Condition from '@/components/Form/Condition';
+import { ConditionType } from '@/components/utils/ConditionButton';
 import style from '@/styles/Home.module.css';
 
 type EditorValueType = {
@@ -16,6 +17,7 @@ const initEditorValue: EditorValueType = {
 const Home = () => {
   const [editorValue, setEditorValue] = useState<EditorValueType>(initEditorValue);
   const [isEdit, setIsEdit] = useState<boolean>(true);
+  const [condition, setCondition] = useState<ConditionType>('normal');
 
   const setTodayLearningHandler = useCallback((value: string) => {
     setEditorValue((prev) => ({ ...prev, todayLearning: value }));
@@ -28,6 +30,10 @@ const Home = () => {
   const onClickPreviewButtonHandler = useCallback(() => { setIsEdit((prev) => !prev); }, []);
 
   const previewButtonName = useMemo(() => (isEdit ? 'プレビュー' : '編集'), [isEdit]);
+
+  const onClickConditionButtonHandler = useCallback((selectCondition: ConditionType) => {
+    setCondition(() => selectCondition);
+  }, []);
 
   return (
     <div className={style.main}>
@@ -44,7 +50,11 @@ const Home = () => {
       </header>
       <div className={style.condition}>
         <h3>〜調子〜</h3>
-        <Condition />
+        <Condition
+          isEdit={isEdit}
+          condition={condition}
+          onClickConditionHandler={onClickConditionButtonHandler}
+        />
       </div>
       <div>
         <h3>〜今日の学び〜</h3>

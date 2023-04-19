@@ -1,12 +1,22 @@
 import { FC, useMemo } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import clsx from 'clsx';
 
 import style from './index.module.css';
 
-export type Props = {
-  iconType: 'veryPoor' | 'poor' | 'normal' | 'goodCondition' | 'veryGoodCondition'
+export type ConditionType = 'veryPoor' | 'poor' | 'normal' | 'goodCondition' | 'veryGoodCondition';
+
+type Props = {
+  iconType: ConditionType
+  isActive: boolean,
+  onClickConditionButtonHandler: (selectCondition: ConditionType) => void
 };
 
-const ConditionButton: FC<Props> = ({ iconType }) => {
+const ConditionButton: FC<Props> = ({
+  iconType,
+  isActive,
+  onClickConditionButtonHandler,
+}) => {
   const buttonIcon = useMemo(() => {
     if (iconType === 'veryPoor') {
       return (
@@ -37,7 +47,11 @@ const ConditionButton: FC<Props> = ({ iconType }) => {
   }, [iconType]);
 
   return (
-    <button type="button" className={style.button}>
+    <button
+      type="button"
+      className={clsx(style.button, isActive && style.activeColor)}
+      onClick={() => onClickConditionButtonHandler(iconType)}
+    >
       {buttonIcon}
     </button>
   );
