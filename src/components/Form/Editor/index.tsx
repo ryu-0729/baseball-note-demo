@@ -19,14 +19,16 @@ import style from './index.module.css';
 
 type Props = {
   editorValue: string
-  setEditorValue: (value: string) => void
+  setEditorValue: (value: string, index: number) => void
   isEdit: boolean
+  index: number
 };
 
 const Editor: FC<Props> = ({
   editorValue,
   setEditorValue,
   isEdit,
+  index,
 }) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -50,7 +52,7 @@ const Editor: FC<Props> = ({
       dispatchTransaction(tr) {
         const newState = view.state.apply(tr);
         view.updateState(newState);
-        setEditorValue(defaultMarkdownSerializer.serialize(newState.doc));
+        setEditorValue(defaultMarkdownSerializer.serialize(newState.doc), index);
       },
       editable: () => isEdit,
     });
