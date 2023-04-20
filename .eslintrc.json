@@ -11,7 +11,15 @@
     "react/function-component-definition": [2, {
       "namedComponents": "arrow-function"
     }],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "max-classes-per-file": [
+      "error",
+      { "ignoreExpressions": true, "max": 3 }
+    ],
+    "import/prefer-default-export": [
+      "off", "warn", "error",
+      { "target": "single" }
+    ]
   },
   "parserOptions": {
     "project": "./tsconfig.json"

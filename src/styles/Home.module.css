@@ -1,6 +1,8 @@
 .main {
   padding: 10px;
+  width: 500px;
   min-height: 100vh;
+  margin: auto;
 }
 
 .headerContents {
@@ -10,6 +12,15 @@
 
 .headerContents button {
   margin: 10px;
+  background-color: #fff;
+  border: 1px solid #08131A24;
+  border-radius: 4px;
+  width: 100px;
+  height: 30px;
+}
+
+.condition {
+  margin-bottom: 40px;
 }
 
 .description {
