@@ -93,6 +93,7 @@ export const schema = new Schema({
       attrs: {
         href: {},
         title: { default: null },
+        target: { default: '_blank' },
       },
       inclusive: false,
       parseDOM: [{

@@ -54,10 +54,10 @@ function linkItem(markType: MarkType) {
         title: 'Create a link',
         fields: {
           href: new TextField({
-            label: 'Link target',
+            label: 'URL',
             required: true,
           }),
-          title: new TextField({ label: 'Title' }),
+          // title: new TextField({ label: 'Title' }),
         },
         callback(attrs) {
           toggleMark(markType, attrs)(view.state, view.dispatch);

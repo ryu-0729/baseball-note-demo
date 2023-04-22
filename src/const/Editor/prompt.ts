@@ -84,13 +84,15 @@ export function openPrompt(options: {
 }
 
 function getValues(fields: { [name: string]: Field }, domFields: readonly HTMLElement[]) {
-  const result = Object.create(null); let
-    i = 0;
+  const result = Object.create(null);
+  // let i = 0;
   for (const name in fields) {
-    const field = fields[name]; const
-      dom = domFields[i += 1];
-    const value = field.read(dom); const
-      bad = field.validate(value);
+    const field = fields[name];
+    // TODO: domがundefindになるため修正。ただし確認必要
+    // const dom = domFields[i += 1];
+    const dom = domFields[0];
+    const value = field.read(dom);
+    const bad = field.validate(value);
     if (bad) {
       reportInvalid(dom, bad);
       return null;
@@ -148,7 +150,7 @@ export abstract class Field {
 
   /// @internal
   validate(value: any): string | null {
-    if (!value && this.options.required) { return 'Required field'; }
+    if (!value && this.options.required) { return 'URLを入力してください。'; }
     return this.validateType(value)
       || (this.options.validate ? this.options.validate(value) : null);
   }
